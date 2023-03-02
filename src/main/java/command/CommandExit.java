@@ -1,3 +1,5 @@
+package command;
+
 /**
  * This Command executes a safe exit of Duke.
  */

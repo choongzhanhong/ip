@@ -1,3 +1,5 @@
+package command;
+
 public class CommandHelp extends Command {
 
     @Override
