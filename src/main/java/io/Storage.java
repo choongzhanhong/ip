@@ -14,6 +14,7 @@ import java.util.Scanner;
  * Use this to save, write, and parse files.
  */
 public final class Storage {
+
     private static final String DEFAULT_FILE_PATH = "data/papatask.txt";
     public static final String FILE_DELIMITER = "|";
     private String filePath; // To store custom file path and for methods to reference.
@@ -147,7 +148,7 @@ public final class Storage {
      */
     public void writeToFile(String textToAdd) {
         try {
-            FileWriter writer = new FileWriter(DEFAULT_FILE_PATH);
+            FileWriter writer = new FileWriter(this.filePath);
             writer.write(textToAdd);
             // Add newline
             writer.write(System.lineSeparator());

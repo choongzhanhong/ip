@@ -1,6 +1,6 @@
 package task;
 
-import io.IO;
+import io.Storage;
 
 public class Event extends Task {
 
@@ -30,8 +30,8 @@ public class Event extends Task {
     @Override
     public String getFileWriteFormat() {
         String output = "E " + super.getFileWriteFormat()
-                + String.format(" %s %s %s %s", IO.FILE_DELIMITER, timeStart,
-                IO.FILE_DELIMITER, timeEnd);
+                + String.format(" %s %s %s %s", Storage.FILE_DELIMITER, timeStart,
+                Storage.FILE_DELIMITER, timeEnd);
         return output;
     }
 }

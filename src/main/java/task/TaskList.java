@@ -1,10 +1,9 @@
 package task;
 
-import java.util.Arrays;
 import java.util.ArrayList;
-import io.IO;
-import io.DukeException;
-import io.IO;
+import io.Storage;
+
+import io.Ui;
 
 public class TaskList {
     private static final ArrayList<Task> tasks = new ArrayList<Task>();
@@ -76,7 +75,7 @@ public class TaskList {
             taskNumber = Integer.parseInt(commandArgs);
         } catch (NumberFormatException e) {
             // Not an int. Send back an error message.
-            return IO.ERROR_MESSAGE_TASK_INDEX;
+            return Ui.ERROR_MESSAGE_TASK_INDEX;
         }
         // Check Integer is in range
         try {
@@ -86,7 +85,7 @@ public class TaskList {
                 return tasks.get(taskNumber - 1).markAsUndone();
             }
         } catch (IndexOutOfBoundsException e) {
-            return IO.ERROR_MESSAGE_TASK_INDEX;
+            return Ui.ERROR_MESSAGE_TASK_INDEX;
         }
         // If nothing else works...
         return "Huh?";
@@ -102,13 +101,13 @@ public class TaskList {
         return numberOfTasks + 1;
     }
 
-    public static void writeAllToFile() {
+    public static void writeAllToFile(Storage storage) {
         String output = "";
         for (Task task : tasks) {
             if (task != null) {
                 output += task.getFileWriteFormat() + '\n';
             }
         }
-        IO.writeToFile(output);
+        storage.writeToFile(output);
     }
 }

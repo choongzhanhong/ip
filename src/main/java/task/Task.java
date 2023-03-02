@@ -1,6 +1,6 @@
 package task;
 
-import io.IO;
+import io.Storage;
 
 /**
  * Abstract class to cover different task types.
@@ -51,7 +51,7 @@ public abstract class Task {
      */
     public String getFileWriteFormat() {
         String done = isDone ? "1" : "0";
-        return String.format("%s %s %s %s", IO.FILE_DELIMITER,
-                done, IO.FILE_DELIMITER, description);
+        return String.format("%s %s %s %s", Storage.FILE_DELIMITER,
+                done, Storage.FILE_DELIMITER, description);
     };
 }

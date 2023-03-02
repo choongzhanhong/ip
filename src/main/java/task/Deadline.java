@@ -1,6 +1,6 @@
 package task;
 
-import io.IO;
+import io.Storage;
 
 public class Deadline extends Task {
     protected String by;
@@ -25,7 +25,7 @@ public class Deadline extends Task {
     @Override
     public String getFileWriteFormat() {
         String output = "D " + super.getFileWriteFormat()
-                + String.format(" %s %s", IO.FILE_DELIMITER, by);
+                + String.format(" %s %s", Storage.FILE_DELIMITER, by);
         return output;
     }
 }
