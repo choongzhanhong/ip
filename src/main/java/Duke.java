@@ -1,3 +1,4 @@
+import command.Command;
 import io.*;
 import task.Deadline;
 import task.Event;
@@ -10,8 +11,11 @@ import java.util.Scanner;
 public class Duke {
     private TaskList tasks;
     private Storage storage;
+    private Ui ui;
 
+    // TODO: Find a way to combine this and the default constructor.
     public Duke(String filePath) {
+        ui = new Ui();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(); //storage.load());
@@ -22,6 +26,7 @@ public class Duke {
     }
 
     public Duke() {
+        ui = new Ui();
         storage = new Storage();
         try {
             tasks = new TaskList(); //storage.load());
@@ -46,23 +51,20 @@ public class Duke {
 
     private void run() {
         Ui.printGreeting();
-        Ui.printHLine();
 
-        // Input variables initialised.
-        Scanner myScanner = new Scanner(System.in);
-        String userInput;
 
-        // The main loop, which ends when user says Bye
-        while (true) {
+
+        boolean isExit = false;
+
+        while (!isExit) {
             System.out.print("> ");
-            userInput = myScanner.nextLine();
-
-            // Execute command and print out the feedback string.
-            String feedback = executeCommand(userInput.toLowerCase());
+            String fullCommand = ui.readCommand();
+            String feedback = executeCommand(fullCommand);
             System.out.println(feedback);
 
             Ui.printHLine();
         }
+
     }
 
     /**
@@ -78,25 +80,25 @@ public class Duke {
         // Check command against the set list of commands.
         // If it doesn't exist, default is invalid
         switch(command) {
-        case Ui.COMMAND_HELP:
+        case Command.COMMAND_HELP:
             return Ui.MESSAGE_HELP;
-        case Ui.COMMAND_LIST:
+        case Command.COMMAND_LIST:
             if (tasks.getNumberOfTasks() < 1) {
                 return Ui.ERROR_TASKS_EMPTY;
             }
             return TaskList.getTaskListString();
-        case Ui.COMMAND_MARK: // Fallthrough
-        case Ui.COMMAND_UNMARK:
+        case Command.COMMAND_MARK: // Fallthrough
+        case Command.COMMAND_UNMARK:
             return TaskList.executeMarkUnmark(command, commandArgs);
-        case Ui.COMMAND_TASK_TODO:
+        case Command.COMMAND_TASK_TODO:
             return handleAddTaskTodo(commandArgs);
-        case Ui.COMMAND_TASK_DEADLINE:
+        case Command.COMMAND_TASK_DEADLINE:
             return handleAddTaskDeadline(commandArgs);
-        case Ui.COMMAND_TASK_EVENT:
+        case Command.COMMAND_TASK_EVENT:
             return handleAddTaskEvent(commandArgs);
-        case Ui.COMMAND_DELETE:
+        case Command.COMMAND_DELETE:
             return handleDelete(commandArgs);
-        case Ui.COMMAND_BYE:
+        case Command.COMMAND_BYE:
             Ui.printExitMessage();
             TaskList.writeAllToFile();
             System.exit(0);

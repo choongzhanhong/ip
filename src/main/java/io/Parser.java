@@ -1,5 +1,7 @@
 package io;
 
+import command.Command;
+
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
@@ -34,7 +36,7 @@ public class Parser {
     }
 
     public static String[] processTaskDeadline(String commandArgs) throws DukeException {
-        String[] deadlineArgs = commandArgs.split(Ui.COMMAND_TASK_DEADLINE_DELIMITER_REGEX);
+        String[] deadlineArgs = commandArgs.split(Command.COMMAND_TASK_DEADLINE_DELIMITER_REGEX);
 
         // Needs to be specifically 2, i.e. [task_name, deadline]
         // Is this a magic number?
@@ -46,13 +48,13 @@ public class Parser {
 
     public static String[] processTaskEvent(String commandArgs) throws DukeException {
         // ensure it contains both.
-        if (!commandArgs.contains(Ui.COMMAND_TASK_EVENT_DELIMITER1) ||
-                !commandArgs.contains(Ui.COMMAND_TASK_EVENT_DELIMITER2)) {
+        if (!commandArgs.contains(Command.COMMAND_TASK_EVENT_DELIMITER1) ||
+                !commandArgs.contains(Command.COMMAND_TASK_EVENT_DELIMITER2)) {
             throw new DukeException();
         }
 
         // TODO check for inputs like /from abc /from abc /to
-        String[] eventArgs = commandArgs.split(Ui.COMMAND_TASK_EVENT_DELIMITER_REGEX);
+        String[] eventArgs = commandArgs.split(Command.COMMAND_TASK_EVENT_DELIMITER_REGEX);
 
         // Needs to be specifically 3, i.e. [task_name, from, to]
         if (eventArgs.length != 3) {

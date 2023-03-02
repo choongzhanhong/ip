@@ -1,55 +1,37 @@
 package io;
 
+import command.Command;
 import task.Task;
 import task.TaskList;
+
+import java.util.Scanner;
 
 /**
  * Handles all user interactions in PAPA.
  */
 public final class Ui {
-    /** Command format for the user's input. */
-    public static final String COMMAND_HELP = "help";
-    public static final String COMMAND_LIST = "list";
-    public static final String COMMAND_BYE = "bye";
-    public static final String COMMAND_MARK = "mark";
-    public static final String COMMAND_UNMARK = "unmark";
-    public static final String COMMAND_DELETE = "delete";
+    private Scanner myScanner;
+    private String userInput;
 
-    /** Add task commands. Sample usage as below. not delimited by spaces.
-     *  todo: "todo task_name"
-     *  deadline: "deadline task_name /by due_date"
-     *  event: "event task_name /from start_time /to end_time"
-     */
-    public static final String COMMAND_TASK_TODO = "todo";
-    public static final String COMMAND_TASK_DEADLINE = "deadline";
-    public static final String COMMAND_TASK_DEADLINE_DELIMITER = "/by";
-    public static final String COMMAND_TASK_DEADLINE_DELIMITER_REGEX =
-            "\\s+\\" + COMMAND_TASK_DEADLINE_DELIMITER + "\\s+";
-    public static final String COMMAND_TASK_EVENT = "event";
-    public static final String COMMAND_TASK_EVENT_DELIMITER1 = "/from";
-    public static final String COMMAND_TASK_EVENT_DELIMITER2 = "/to";
-    public static final String COMMAND_TASK_EVENT_DELIMITER_REGEX =
-            "\\s+\\" + COMMAND_TASK_EVENT_DELIMITER1 +
-                    "\\s+|\\s+\\" + COMMAND_TASK_EVENT_DELIMITER2 + "\\s+";
+    public Ui() {
+        Scanner myScanner = new Scanner(System.in);
+    }
 
-    /**
-     * ==============================================================
-     * Below are Outputs for PAPA to print.
-     * Note string format placeholders, so ensure to use printf/format.
-     * ==============================================================
-     */
+    public String readCommand() {
+        return myScanner.nextLine();
+    }
     public static final String MESSAGE_HELP = "PAPA is your personal task tracker. Options:\n" +
             "Add tasks: \n" +
-            String.format("   %s <task_name>\n", COMMAND_TASK_TODO) +
+            String.format("   %s <task_name>\n", Command.COMMAND_TASK_TODO) +
             String.format("   %s <task_name> %s <due_date>\n",
-                    COMMAND_TASK_DEADLINE, COMMAND_TASK_DEADLINE_DELIMITER) +
+                    Command.COMMAND_TASK_DEADLINE, Command.COMMAND_TASK_DEADLINE_DELIMITER) +
             String.format("   %s <task_name> %s <start> %s <end>\n",
-                    COMMAND_TASK_EVENT, COMMAND_TASK_EVENT_DELIMITER1, COMMAND_TASK_EVENT_DELIMITER2) +
-            String.format("%s        Show these tips.\n", COMMAND_HELP) +
-            String.format("%s        List out existing tasks.\n", COMMAND_LIST) +
-            String.format("%s         Exit PAPA.\n", COMMAND_BYE) +
-            String.format("%s <n>    Mark the n-th task as done.\n", COMMAND_MARK) +
-            String.format("%s <n>  Mark the n-th task as undone.", COMMAND_UNMARK);
+                    Command.COMMAND_TASK_EVENT, Command.COMMAND_TASK_EVENT_DELIMITER1, Command.COMMAND_TASK_EVENT_DELIMITER2) +
+            String.format("%s        Show these tips.\n", Command.COMMAND_HELP) +
+            String.format("%s        List out existing tasks.\n", Command.COMMAND_LIST) +
+            String.format("%s         Exit PAPA.\n", Command.COMMAND_BYE) +
+            String.format("%s <n>    Mark the n-th task as done.\n", Command.COMMAND_MARK) +
+            String.format("%s <n>  Mark the n-th task as undone.", Command.COMMAND_UNMARK);
 
     public static final String MESSAGE_LOGO =
             "██████╗  █████╗ ██████╗  █████╗ \n" +
@@ -76,7 +58,7 @@ public final class Ui {
             "Erm, do make sure to give me the correct task number." +
             "Type 'task' to list out the existing tasks!";
     public static final String ERROR_MESSAGE_HELP =
-            String.format("Type %s for information on commands!", COMMAND_HELP);
+            String.format("Type %s for information on commands!", Command.COMMAND_HELP);
     public static final String ERROR_MESSAGE_ARGUMENT_NUMBER =
             "You might be missing some arguments, or have too many.\n" + ERROR_MESSAGE_HELP;
     public static final String ERROR_MESSAGE_ARGUMENT_MISSING =
